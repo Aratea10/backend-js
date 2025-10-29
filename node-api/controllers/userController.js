@@ -1,4 +1,5 @@
 import { users } from "../data/Users.js";
+import { User } from "../models/User.js";
 
 export const userController = {
   getAll: (req, res, next) => {
@@ -57,8 +58,15 @@ export const userController = {
     res.status(200).json(userFind);
   },
 
-  add: (req, res, next) => {
-    console.log(req.body);
-    res.end();
+  add: async (req, res, next) => {
+    const user = new User({
+      email: req.body.email,
+    });
+
+    const savedUser = await user.save();
+
+    console.log(savedUser);
+
+    res.status(201).json(user);
   },
 };
