@@ -1,3 +1,5 @@
+import { hash } from "bcrypt";
+
 import { users } from "../data/Users.js";
 import { User } from "../models/User.js";
 
@@ -61,14 +63,14 @@ export const userController = {
   add: async (req, res, next) => {
     const user = new User({
       email: req.body.email,
+      // password: req.body.password
+      password: await hash(req.body.password, 7),
     });
 
     try {
       const savedUser = await user.save();
-
-      console.log(savedUser);
-
-      res.status(201).json(user);
+      savedUser.password = undefined;
+      res.status(201).json(savedUser);
     } catch (ex) {
       if (ex.code && ex.code === 11000) {
         res.status(400).json({
