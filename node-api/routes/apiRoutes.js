@@ -38,5 +38,8 @@ router.get("/users/:id", userController.getOneById);
 router.post("/users", userController.add);
 
 // Todos
+router.get("/todos", todoController.getAll);
 router.get("/todos/:id", todoController.getOneById);
 router.post("/todos/", todoController.add);
+router.put("/todos/:id", todoController.update);
+router.delete("/todos/:id", todoController.remove);
