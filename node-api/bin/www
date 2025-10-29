@@ -1,8 +1,9 @@
-import http from 'node:http';
-import app from '../app.js';
+import http from "node:http";
+import app from "../app.js";
+import { dbClient } from "../lib/connectMongo.js";
 
 const port = process.env.PORT || 3000;
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || "development";
 
 // Separar en un archivo server es opcional
 // Lo necesitamos en caso de:
@@ -13,5 +14,9 @@ const env = process.env.NODE_ENV || 'development';
 const server = http.createServer(app);
 
 server.listen(port, () => {
-    console.log(`[${env.toUpperCase()}] - Server running on http://localhost:${port}`);
-})
+  dbClient.connect().then(() => {
+    console.log(
+      `[${env.toUpperCase()}] - Server running on http://localhost:${port}`
+    );
+  });
+});
