@@ -13,6 +13,7 @@ import {
   getTwoParams,
 } from "../controllers/demoController.js";
 import { userController } from "../controllers/userController.js";
+import { todoController } from "../controllers/todoController.js";
 
 export const router = express.Router();
 
@@ -35,3 +36,6 @@ router.get("/users", userController.getAll);
 // Como hacemos para tener un unico usuario?
 router.get("/users/:id", userController.getOneById);
 router.post("/users", userController.add);
+
+// Todos
+router.get("/todos", todoController.getAll);
