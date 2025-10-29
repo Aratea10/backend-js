@@ -14,6 +14,7 @@ import {
 } from "../controllers/demoController.js";
 import { userController } from "../controllers/userController.js";
 import { todoController } from "../controllers/todoController.js";
+import { agentController } from "../controllers/agentController.js";
 
 export const router = express.Router();
 
@@ -36,6 +37,9 @@ router.get("/users", userController.getAll);
 // Como hacemos para tener un unico usuario?
 router.get("/users/:id", userController.getOneById);
 router.post("/users", userController.add);
+
+// Agent routes
+router.post("/agents", agentController.add);
 
 // Todos
 router.get(
