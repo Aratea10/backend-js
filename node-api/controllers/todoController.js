@@ -1,4 +1,5 @@
 import { validationResult, matchedData } from "express-validator";
+import { ObjectId } from "mongodb";
 
 import { dbClient } from "../lib/connectMongo.js";
 import { todos } from "../data/Todos.js";
@@ -38,10 +39,9 @@ export const todoController = {
     res.status(200).json(dbTodos);
   },
 
-  getOneById: (req, res, next) => {
+  getOneById: async (req, res, next) => {
     const result = validationResult(req);
     const data = matchedData(req);
-    console.log({ result, data });
 
     if (result.errors.length > 0) {
       return res.status(400).json({
@@ -49,16 +49,23 @@ export const todoController = {
       });
     }
 
-    const todoFind = todos.find((i) => i.id === data.id);
+    const item = await dbClient
+      .db()
+      .collection("todos")
+      .findOne({
+        _id: ObjectId.createFromHexString(data.id),
+      });
 
-    if (!todoFind) {
+    if (!item) {
       return next();
     }
 
-    res.status(200).json(todoFind);
+    res.status(200).json(item);
   },
 
   add: (req, res, next) => {
+    // TODO: Migrar a base de datos con consulta nativa
+
     const lastId = todos.sort((a, b) => b.id - a.id)[0].id;
     const nextId = lastId + 1;
 
@@ -81,6 +88,8 @@ export const todoController = {
   },
 
   update: (req, res, next) => {
+    // TODO: migrar a base de datos con consulta nativa
+
     const id = parseInt(req.params.id);
 
     const findTodoIdx = todos.findIndex((i) => i.id === id);
@@ -102,6 +111,8 @@ export const todoController = {
   },
 
   remove: (req, res, next) => {
+    // Todo: migrar a base de datos con consulta nativa
+
     const id = parseInt(req.params.id);
 
     const findTodoIdx = todos.findIndex((i) => i.id === id);
