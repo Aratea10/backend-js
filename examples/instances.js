@@ -1,17 +1,17 @@
-'use strict';
+"use strict";
 
 function Fruta(nombre) {
-    this.nombre = nombre;
-    // return this; // Lo añade JS al instanciar con new
-    // this.saluda = function() {
-    //     console.log("Hola soy ", this.nombre);
-    // }
-    this.saluda = () => {
-        console.log("Hola soy ", this.nombre);
-    }
-};
+  this.nombre = nombre;
+  // return this; // Lo añade JS al instanciar con new
+  // this.saluda = function() {
+  //     console.log("Hola soy ", this.nombre);
+  // }
+  this.saluda = () => {
+    console.log("Hola soy ", this.nombre);
+  };
+}
 
-const limon = new Fruta('limón');
+const limon = new Fruta("limón");
 
 console.log(limon);
 limon.saluda();
