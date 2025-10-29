@@ -1,5 +1,5 @@
 import express from "express";
-import { query } from "express-validator";
+import { query, param } from "express-validator";
 
 // Controllers
 import { healthCall } from "../controllers/healthController.js";
@@ -49,12 +49,29 @@ router.get(
     // Sanitiza a booleano
     .toBoolean(),
 
-  // TODO: validar skip y limit
+  query("skip", "Must be a valid positive number")
+    .optional()
+    .isInt({
+      min: 1,
+    })
+    .toInt(),
+  query("limit", "Must be a valid positive number")
+    .optional()
+    .isInt({
+      min: 1,
+    })
+    .toInt(),
+
+  // TODO: validar userId
 
   // Controlador
   todoController.getAll
 );
-router.get("/todos/:id", todoController.getOneById);
+router.get(
+  "/todos/:id",
+  param("id").notEmpty().isInt({ min: 1 }).toInt(),
+  todoController.getOneById
+);
 router.post("/todos/", todoController.add);
 router.put("/todos/:id", todoController.update);
 router.delete("/todos/:id", todoController.remove);
