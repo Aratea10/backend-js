@@ -1,21 +1,25 @@
+import { validationResult, matchedData } from "express-validator";
+
 import { todos } from "../data/Todos.js";
 
 export const todoController = {
   getAll: (req, res) => {
     let retTodos = todos;
 
-    if (req.query.completed) {
-      // ?completed=true
-      // ?completed=false
-      // ?completed=1
-      // ?completed=0
-      // const completed = req.query.completed === 'true';
-      const completed =
-        req.query.completed.toLowerCase() === "true" ||
-        req.query.completed === "1";
-      // Cuando es false quiere los no completados o los quiere todos?
+    // Express - validator resut
+    const result = validationResult(req);
+    const data = matchedData(req);
 
-      retTodos = retTodos.filter((i) => i.completed === completed);
+    console.log({ result, data });
+
+    if (result.errors.length > 0) {
+      return res.status(400).json({
+        errors: result.errors,
+      });
+    }
+
+    if (data.completed !== undefined) {
+      retTodos = retTodos.filter((i) => i.completed === data.completed);
     }
 
     if (req.query.userId) {
