@@ -11,6 +11,7 @@ import {
   filterAdminPath,
   filterFirefox,
   guard,
+  sessionMiddleware,
 } from "./lib/middlewares/authMiddleware.js";
 import {
   serverErrorHandler,
@@ -78,6 +79,7 @@ app.use((req, res, next) => {
  */
 app.use(filterAdminPath);
 app.use(filterFirefox);
+app.use(sessionMiddleware);
 
 /**
  * Routes
