@@ -39,6 +39,7 @@ router.get("/users/:id", userController.getOneById);
 router.post("/users", userController.add);
 
 // Agent routes
+router.get("/agents", agentController.getAll);
 router.post("/agents", agentController.add);
 
 // Todos
