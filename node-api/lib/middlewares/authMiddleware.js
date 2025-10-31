@@ -17,3 +17,9 @@ export function filterFirefox(req, res, next) {
   }
   next();
 }
+
+export function guard(req, res, next) {
+  const redirect = req.url;
+  // Si no tenemos sesión, al login
+  return res.redirect(`/login?redir=${redirect}`);
+}

@@ -10,6 +10,7 @@ import { connectMongoose } from "./lib/connectMongoose.js";
 import {
   filterAdminPath,
   filterFirefox,
+  guard,
 } from "./lib/middlewares/authMiddleware.js";
 import {
   serverErrorHandler,
