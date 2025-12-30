@@ -1,3 +1,4 @@
+// Filtrar todas las peticiones a /admin -> 403
 export function filterAdminPath(req, res, next) {
     if (req.url.startsWith('/admin')) {
         return res.status(403).send("Forbidden Access to /admin path");
@@ -5,6 +6,7 @@ export function filterAdminPath(req, res, next) {
     next();
 };
 
+// Rechaza todas las peticiones que vengan desde un navegador Firefox
 export function filterFirefox(req, res, next) {
     // Forbidden for firefox users
     if (
